@@ -1,1 +1,240 @@
-<h1>这是张江的官方简历</h1>
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>张江 | 高级运维开发工程师</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+
+<style>
+:root {
+  --bg: #0f172a;
+  --card: #111827;
+  --accent: #38bdf8;
+  --text: #e5e7eb;
+  --sub: #94a3b8;
+  --border: #1f2937;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Inter', sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  line-height: 1.6;
+}
+
+.container {
+  max-width: 1000px;
+  margin: auto;
+  padding: 60px 20px;
+}
+
+header {
+  margin-bottom: 60px;
+}
+
+h1 {
+  font-size: 42px;
+  font-weight: 700;
+  letter-spacing: 1px;
+}
+
+.subtitle {
+  color: var(--accent);
+  margin-top: 10px;
+  font-size: 18px;
+}
+
+.contact {
+  margin-top: 20px;
+  color: var(--sub);
+  font-size: 14px;
+}
+
+.section {
+  margin-bottom: 60px;
+}
+
+.section h2 {
+  font-size: 20px;
+  border-left: 4px solid var(--accent);
+  padding-left: 12px;
+  margin-bottom: 20px;
+  letter-spacing: 1px;
+}
+
+.card {
+  background: var(--card);
+  padding: 25px;
+  border-radius: 12px;
+  border: 1px solid var(--border);
+  margin-bottom: 20px;
+  transition: all 0.3s ease;
+}
+
+.card:hover {
+  border-color: var(--accent);
+  transform: translateY(-3px);
+}
+
+.job-title {
+  font-weight: 600;
+  font-size: 18px;
+}
+
+.job-meta {
+  color: var(--sub);
+  font-size: 14px;
+  margin-bottom: 10px;
+}
+
+ul {
+  padding-left: 20px;
+}
+
+li {
+  margin-bottom: 6px;
+}
+
+.tech-stack {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.tag {
+  background: #1e293b;
+  padding: 6px 12px;
+  border-radius: 20px;
+  font-size: 13px;
+  color: var(--accent);
+  border: 1px solid #334155;
+}
+
+footer {
+  text-align: center;
+  margin-top: 80px;
+  color: var(--sub);
+  font-size: 13px;
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+<header>
+  <h1>张江</h1>
+  <div class="subtitle">Senior DevOps / SRE Engineer</div>
+  <div class="contact">
+    📍 上海 ｜ 📞 17681567973 ｜ ✉️ m17681567973@163.com <br>
+    8年互联网 & 金融科技运维开发经验
+  </div>
+</header>
+
+<section class="section">
+<h2>职业概要</h2>
+<div class="card">
+<p>
+精通 Kubernetes 生态与 Python 开发，具备从 0 到 1 构建自动化运维平台（CMDB、CI/CD、可观测性）的能力。
+深耕 SRE 稳定性建设与高并发架构优化，擅长容量规划、全链路压测及性能调优。
+致力于通过 DevOps 与 IaC 实现平台工程化与业务提效。
+</p>
+</div>
+</section>
+
+<section class="section">
+<h2>核心技术栈</h2>
+<div class="card tech-stack">
+<span class="tag">Kubernetes</span>
+<span class="tag">Docker</span>
+<span class="tag">Helm</span>
+<span class="tag">Python (Flask/FastAPI)</span>
+<span class="tag">Prometheus</span>
+<span class="tag">ELK</span>
+<span class="tag">Grafana</span>
+<span class="tag">MySQL</span>
+<span class="tag">Redis</span>
+<span class="tag">Kafka</span>
+<span class="tag">Terraform</span>
+<span class="tag">Ansible</span>
+<span class="tag">Jenkins Pipeline</span>
+<span class="tag">GitLab CI</span>
+</div>
+</section>
+
+<section class="section">
+<h2>代表项目</h2>
+
+<div class="card">
+<div class="job-title">金融级 DevOps 运维开发平台构建（主要负责人）</div>
+<div class="job-meta">支撑 1W+ QPS ｜ 300+ CI/CD 流水线</div>
+<ul>
+<li>设计 Kubernetes 容器化 DevOps 平台与高可用存储架构</li>
+<li>构建标准化 Pipeline as Code 流水线体系</li>
+<li>构建 ELK + Prometheus 企业级监控体系</li>
+<li>优化构建效率，核心业务构建时间缩短 65%</li>
+<li>MySQL / MongoDB 性能调优，接口响应提升 3 倍</li>
+</ul>
+</div>
+
+<div class="card">
+<div class="job-title">基于 Helm 的标准化工程交付平台（项目主导）</div>
+<div class="job-meta">19个业务分区 ｜ IaC 分层策略</div>
+<ul>
+<li>设计通用 Helm Chart 模板体系</li>
+<li>Terraform + Ansible 分层 IaC 架构</li>
+<li>平台虚机到 K8s 容器化改造</li>
+<li>实现一键部署、回滚与高可用扩缩容</li>
+</ul>
+</div>
+
+</section>
+
+<section class="section">
+<h2>工作经历</h2>
+
+<div class="card">
+<div class="job-title">上海骞行信息技术有限公司 ｜ 高级运维工程师</div>
+<div class="job-meta">2025.08 - 至今</div>
+<ul>
+<li>统一管理平台开发与专项告警系统定制</li>
+<li>180+ 服务器自动化脚本体系建设</li>
+</ul>
+</div>
+
+<div class="card">
+<div class="job-title">广州嘉为科技有限公司（上海分公司） ｜ 高级运维工程师</div>
+<div class="job-meta">2022.10 - 2024.11</div>
+<ul>
+<li>大型银行 DevOps 转型交付</li>
+<li>管理 200+ Pod 稳定运行</li>
+<li>自动化体系从 0 到 1 建设</li>
+</ul>
+</div>
+
+</section>
+
+<section class="section">
+<h2>教育背景</h2>
+<div class="card">
+天津城建大学 ｜ 物联网工程（本科）<br>
+2014.09 - 2018.07
+</div>
+</section>
+
+<footer>
+© 2026 Zhang Jiang · DevOps / SRE Engineer
+</footer>
+
+</div>
+</body>
+</html>
