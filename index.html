@@ -1,240 +1,860 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>张江 | 高级运维开发工程师</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>张江 | 高级运维开发工程师</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;600&family=Noto+Sans+SC:wght@300;400;500;700&family=Space+Grotesk:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #0a0e1a;
+      --bg2: #0f1526;
+      --bg3: #141c30;
+      --border: rgba(0, 200, 255, 0.12);
+      --accent: #00c8ff;
+      --accent2: #00ffa3;
+      --accent3: #7c6aff;
+      --text: #c8d8f0;
+      --text-dim: #6a7fa8;
+      --text-bright: #e8f2ff;
+      --mono: 'JetBrains Mono', monospace;
+      --sans: 'Noto Sans SC', 'Space Grotesk', sans-serif;
+    }
 
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
-<style>
-:root {
-  --bg: #0f172a;
-  --card: #111827;
-  --accent: #38bdf8;
-  --text: #e5e7eb;
-  --sub: #94a3b8;
-  --border: #1f2937;
-}
+    html { scroll-behavior: smooth; }
 
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-}
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: var(--sans);
+      font-weight: 300;
+      line-height: 1.75;
+      font-size: 15px;
+    }
 
-body {
-  font-family: 'Inter', sans-serif;
-  background: var(--bg);
-  color: var(--text);
-  line-height: 1.6;
-}
+    /* ── Grid noise background ── */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image:
+        linear-gradient(rgba(0,200,255,0.025) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(0,200,255,0.025) 1px, transparent 1px);
+      background-size: 40px 40px;
+      pointer-events: none;
+      z-index: 0;
+    }
 
-.container {
-  max-width: 1000px;
-  margin: auto;
-  padding: 60px 20px;
-}
+    /* ── Layout ── */
+    .layout {
+      display: flex;
+      min-height: 100vh;
+      position: relative;
+      z-index: 1;
+    }
 
-header {
-  margin-bottom: 60px;
-}
+    /* ── Sidebar ── */
+    .sidebar {
+      width: 260px;
+      flex-shrink: 0;
+      position: sticky;
+      top: 0;
+      height: 100vh;
+      overflow-y: auto;
+      background: var(--bg2);
+      border-right: 1px solid var(--border);
+      padding: 40px 0;
+      display: flex;
+      flex-direction: column;
+    }
 
-h1 {
-  font-size: 42px;
-  font-weight: 700;
-  letter-spacing: 1px;
-}
+    .sidebar-profile {
+      padding: 0 28px 32px;
+      border-bottom: 1px solid var(--border);
+    }
 
-.subtitle {
-  color: var(--accent);
-  margin-top: 10px;
-  font-size: 18px;
-}
+    .avatar-ring {
+      width: 72px;
+      height: 72px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--accent), var(--accent3));
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 16px;
+      position: relative;
+    }
 
-.contact {
-  margin-top: 20px;
-  color: var(--sub);
-  font-size: 14px;
-}
+    .avatar-ring::after {
+      content: '';
+      position: absolute;
+      inset: -3px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--accent), var(--accent3));
+      z-index: -1;
+      opacity: 0.3;
+      filter: blur(6px);
+    }
 
-.section {
-  margin-bottom: 60px;
-}
+    .avatar-initials {
+      font-family: var(--mono);
+      font-size: 22px;
+      font-weight: 600;
+      color: #0a0e1a;
+    }
 
-.section h2 {
-  font-size: 20px;
-  border-left: 4px solid var(--accent);
-  padding-left: 12px;
-  margin-bottom: 20px;
-  letter-spacing: 1px;
-}
+    .sidebar-name {
+      font-size: 20px;
+      font-weight: 700;
+      color: var(--text-bright);
+      letter-spacing: 0.05em;
+      margin-bottom: 4px;
+    }
 
-.card {
-  background: var(--card);
-  padding: 25px;
-  border-radius: 12px;
-  border: 1px solid var(--border);
-  margin-bottom: 20px;
-  transition: all 0.3s ease;
-}
+    .sidebar-title {
+      font-size: 11px;
+      font-family: var(--mono);
+      color: var(--accent);
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+    }
 
-.card:hover {
-  border-color: var(--accent);
-  transform: translateY(-3px);
-}
+    .sidebar-meta {
+      padding: 20px 28px;
+      border-bottom: 1px solid var(--border);
+    }
 
-.job-title {
-  font-weight: 600;
-  font-size: 18px;
-}
+    .meta-item {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 10px;
+      font-size: 12.5px;
+      color: var(--text-dim);
+    }
 
-.job-meta {
-  color: var(--sub);
-  font-size: 14px;
-  margin-bottom: 10px;
-}
+    .meta-item svg { flex-shrink: 0; }
 
-ul {
-  padding-left: 20px;
-}
+    .sidebar-nav {
+      padding: 24px 0;
+      flex: 1;
+    }
 
-li {
-  margin-bottom: 6px;
-}
+    .nav-label {
+      font-family: var(--mono);
+      font-size: 10px;
+      letter-spacing: 0.15em;
+      color: var(--text-dim);
+      text-transform: uppercase;
+      padding: 0 28px;
+      margin-bottom: 8px;
+    }
 
-.tech-stack {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 10px;
-}
+    .nav-link {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 9px 28px;
+      color: var(--text-dim);
+      text-decoration: none;
+      font-size: 13px;
+      transition: all 0.2s;
+      border-left: 2px solid transparent;
+      position: relative;
+    }
 
-.tag {
-  background: #1e293b;
-  padding: 6px 12px;
-  border-radius: 20px;
-  font-size: 13px;
-  color: var(--accent);
-  border: 1px solid #334155;
-}
+    .nav-link:hover, .nav-link.active {
+      color: var(--text-bright);
+      border-left-color: var(--accent);
+      background: rgba(0,200,255,0.04);
+    }
 
-footer {
-  text-align: center;
-  margin-top: 80px;
-  color: var(--sub);
-  font-size: 13px;
-}
-</style>
+    .nav-link .dot {
+      width: 5px; height: 5px;
+      border-radius: 50%;
+      background: var(--text-dim);
+      transition: background 0.2s;
+    }
+
+    .nav-link:hover .dot, .nav-link.active .dot {
+      background: var(--accent);
+      box-shadow: 0 0 6px var(--accent);
+    }
+
+    .sidebar-footer {
+      padding: 20px 28px 0;
+      border-top: 1px solid var(--border);
+      font-family: var(--mono);
+      font-size: 10px;
+      color: var(--text-dim);
+    }
+
+    /* ── Main ── */
+    .main {
+      flex: 1;
+      padding: 60px 64px;
+      max-width: 860px;
+    }
+
+    /* ── Section ── */
+    .section {
+      margin-bottom: 72px;
+      opacity: 0;
+      transform: translateY(20px);
+      animation: fadeUp 0.6s forwards;
+    }
+
+    .section:nth-child(1) { animation-delay: 0.1s; }
+    .section:nth-child(2) { animation-delay: 0.2s; }
+    .section:nth-child(3) { animation-delay: 0.3s; }
+    .section:nth-child(4) { animation-delay: 0.4s; }
+    .section:nth-child(5) { animation-delay: 0.5s; }
+    .section:nth-child(6) { animation-delay: 0.6s; }
+
+    @keyframes fadeUp {
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .section-header {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      margin-bottom: 32px;
+    }
+
+    .section-title {
+      font-size: 13px;
+      font-family: var(--mono);
+      font-weight: 600;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--accent);
+    }
+
+    .section-line {
+      flex: 1;
+      height: 1px;
+      background: linear-gradient(90deg, var(--border), transparent);
+    }
+
+    /* ── Hero ── */
+    .hero-greeting {
+      font-family: var(--mono);
+      font-size: 12px;
+      color: var(--accent2);
+      letter-spacing: 0.15em;
+      margin-bottom: 12px;
+    }
+
+    .hero-name {
+      font-size: 52px;
+      font-weight: 700;
+      color: var(--text-bright);
+      line-height: 1.1;
+      letter-spacing: -0.02em;
+      margin-bottom: 8px;
+    }
+
+    .hero-subtitle {
+      font-family: var(--mono);
+      font-size: 14px;
+      color: var(--accent);
+      margin-bottom: 28px;
+    }
+
+    .hero-desc {
+      color: var(--text);
+      max-width: 640px;
+      line-height: 1.85;
+      font-size: 15px;
+    }
+
+    .hero-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 24px;
+    }
+
+    .tag {
+      font-family: var(--mono);
+      font-size: 11px;
+      padding: 4px 12px;
+      border: 1px solid var(--border);
+      border-radius: 2px;
+      color: var(--text-dim);
+      background: var(--bg3);
+      transition: all 0.2s;
+    }
+
+    .tag:hover {
+      border-color: var(--accent);
+      color: var(--accent);
+    }
+
+    /* ── Tech Stack ── */
+    .stack-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+      gap: 12px;
+    }
+
+    .stack-item {
+      background: var(--bg3);
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      padding: 16px 20px;
+      display: flex;
+      align-items: flex-start;
+      gap: 14px;
+      transition: border-color 0.2s;
+    }
+
+    .stack-item:hover {
+      border-color: rgba(0,200,255,0.3);
+    }
+
+    .stack-category {
+      font-family: var(--mono);
+      font-size: 10px;
+      letter-spacing: 0.12em;
+      color: var(--accent);
+      text-transform: uppercase;
+      min-width: 100px;
+      padding-top: 2px;
+    }
+
+    .stack-techs {
+      font-size: 13px;
+      color: var(--text);
+      line-height: 1.6;
+    }
+
+    /* ── Work Experience ── */
+    .work-item {
+      position: relative;
+      padding-left: 24px;
+      margin-bottom: 44px;
+    }
+
+    .work-item::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 8px;
+      bottom: -44px;
+      width: 1px;
+      background: linear-gradient(180deg, var(--accent), transparent);
+    }
+
+    .work-item:last-child::before {
+      display: none;
+    }
+
+    .work-dot {
+      position: absolute;
+      left: -5px;
+      top: 6px;
+      width: 11px;
+      height: 11px;
+      border-radius: 50%;
+      background: var(--accent);
+      box-shadow: 0 0 10px var(--accent);
+      border: 2px solid var(--bg);
+    }
+
+    .work-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-bottom: 4px;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .work-company {
+      font-size: 17px;
+      font-weight: 600;
+      color: var(--text-bright);
+    }
+
+    .work-period {
+      font-family: var(--mono);
+      font-size: 12px;
+      color: var(--text-dim);
+      background: var(--bg3);
+      border: 1px solid var(--border);
+      padding: 2px 10px;
+      border-radius: 2px;
+    }
+
+    .work-role {
+      font-family: var(--mono);
+      font-size: 12px;
+      color: var(--accent2);
+      letter-spacing: 0.08em;
+      margin-bottom: 14px;
+    }
+
+    .work-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .work-list li {
+      display: flex;
+      gap: 10px;
+      font-size: 14px;
+      color: var(--text);
+      line-height: 1.7;
+    }
+
+    .work-list li::before {
+      content: '▸';
+      color: var(--accent);
+      flex-shrink: 0;
+      margin-top: 1px;
+      font-size: 11px;
+    }
+
+    .work-list strong {
+      color: var(--text-bright);
+      font-weight: 500;
+    }
+
+    /* ── Projects ── */
+    .project-card {
+      background: var(--bg3);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 28px;
+      margin-bottom: 20px;
+      transition: border-color 0.3s, transform 0.2s;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .project-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 2px;
+      background: linear-gradient(90deg, var(--accent), var(--accent3));
+      opacity: 0;
+      transition: opacity 0.3s;
+    }
+
+    .project-card:hover {
+      border-color: rgba(0,200,255,0.25);
+      transform: translateY(-2px);
+    }
+
+    .project-card:hover::before {
+      opacity: 1;
+    }
+
+    .project-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-bottom: 8px;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .project-title {
+      font-size: 16px;
+      font-weight: 600;
+      color: var(--text-bright);
+    }
+
+    .project-role {
+      font-family: var(--mono);
+      font-size: 11px;
+      color: var(--accent3);
+      border: 1px solid rgba(124,106,255,0.3);
+      padding: 2px 10px;
+      border-radius: 2px;
+    }
+
+    .project-bg {
+      font-size: 13px;
+      color: var(--text-dim);
+      margin-bottom: 16px;
+      line-height: 1.7;
+    }
+
+    .project-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .project-list li {
+      display: flex;
+      gap: 10px;
+      font-size: 14px;
+      color: var(--text);
+      line-height: 1.7;
+    }
+
+    .project-list li::before {
+      content: '◆';
+      color: var(--accent2);
+      flex-shrink: 0;
+      font-size: 8px;
+      margin-top: 5px;
+    }
+
+    .project-list strong {
+      color: var(--text-bright);
+      font-weight: 500;
+    }
+
+    .tech-badges {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin-top: 18px;
+    }
+
+    .tech-badge {
+      font-family: var(--mono);
+      font-size: 11px;
+      padding: 3px 10px;
+      background: rgba(0,200,255,0.06);
+      border: 1px solid rgba(0,200,255,0.18);
+      border-radius: 2px;
+      color: var(--accent);
+    }
+
+    /* ── Education ── */
+    .edu-card {
+      background: var(--bg3);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 24px 28px;
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      flex-wrap: wrap;
+      gap: 16px;
+    }
+
+    .edu-school {
+      font-size: 17px;
+      font-weight: 600;
+      color: var(--text-bright);
+      margin-bottom: 4px;
+    }
+
+    .edu-degree {
+      font-size: 14px;
+      color: var(--text);
+      margin-bottom: 10px;
+    }
+
+    .edu-courses {
+      font-size: 13px;
+      color: var(--text-dim);
+    }
+
+    .edu-courses span {
+      color: var(--text);
+    }
+
+    .edu-period {
+      font-family: var(--mono);
+      font-size: 13px;
+      color: var(--text-dim);
+      text-align: right;
+      flex-shrink: 0;
+    }
+
+    /* ── Scrollbar ── */
+    ::-webkit-scrollbar { width: 5px; }
+    ::-webkit-scrollbar-track { background: var(--bg2); }
+    ::-webkit-scrollbar-thumb { background: rgba(0,200,255,0.2); border-radius: 4px; }
+
+    /* ── Responsive ── */
+    @media (max-width: 900px) {
+      .sidebar { display: none; }
+      .main { padding: 40px 24px; }
+      .hero-name { font-size: 36px; }
+    }
+  </style>
 </head>
-
 <body>
 
-<div class="container">
+<div class="layout">
+  <!-- Sidebar -->
+  <aside class="sidebar">
+    <div class="sidebar-profile">
+      <div class="avatar-ring">
+        <span class="avatar-initials">张江</span>
+      </div>
+      <div class="sidebar-name">张江</div>
+      <div class="sidebar-title">Senior DevOps Engineer</div>
+    </div>
+    <div class="sidebar-meta">
+      <div class="meta-item">
+        <svg width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor" style="color:var(--accent)"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h14a2 2 0 012 2v2H3V5zm0 4h18v10a2 2 0 01-2 2H5a2 2 0 01-2-2V9z"/></svg>
+        m17681567973@163.com
+      </div>
+      <div class="meta-item">
+        <svg width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor" style="color:var(--accent)"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498A1 1 0 0121 15.72V19a2 2 0 01-2 2H5a2 2 0 01-2-2v-4z"/></svg>
+        17681567973
+      </div>
+      <div class="meta-item">
+        <svg width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor" style="color:var(--accent)"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
+        上海 | 8年工作经验
+      </div>
+    </div>
+    <nav class="sidebar-nav">
+      <div class="nav-label">导航</div>
+      <a href="#about" class="nav-link active"><span class="dot"></span>职业概要</a>
+      <a href="#skills" class="nav-link"><span class="dot"></span>技术栈</a>
+      <a href="#experience" class="nav-link"><span class="dot"></span>工作经历</a>
+      <a href="#projects" class="nav-link"><span class="dot"></span>项目经历</a>
+      <a href="#education" class="nav-link"><span class="dot"></span>教育背景</a>
+    </nav>
+    <div class="sidebar-footer">
+      <span style="font-family:var(--mono);font-size:10px">// last_updated: 2025</span>
+    </div>
+  </aside>
 
-<header>
-  <h1>张江</h1>
-  <div class="subtitle">Senior DevOps / SRE Engineer</div>
-  <div class="contact">
-    📍 上海 ｜ 📞 17681567973 ｜ ✉️ m17681567973@163.com <br>
-    8年互联网 & 金融科技运维开发经验
-  </div>
-</header>
+  <!-- Main Content -->
+  <main class="main">
 
-<section class="section">
-<h2>职业概要</h2>
-<div class="card">
-<p>
-精通 Kubernetes 生态与 Python 开发，具备从 0 到 1 构建自动化运维平台（CMDB、CI/CD、可观测性）的能力。
-深耕 SRE 稳定性建设与高并发架构优化，擅长容量规划、全链路压测及性能调优。
-致力于通过 DevOps 与 IaC 实现平台工程化与业务提效。
-</p>
+    <!-- Hero / About -->
+    <section id="about" class="section">
+      <div class="hero-greeting">// hello, world — 你好</div>
+      <div class="hero-name">张江</div>
+      <div class="hero-subtitle">$ Senior DevOps &amp; SRE Engineer_</div>
+      <p class="hero-desc">
+        8年互联网与金融科技领域运维开发经验。精通 <strong style="color:var(--accent)">Kubernetes 生态</strong>与 <strong style="color:var(--accent)">Python 开发</strong>，具备从 0 到 1 构建一体化自动化运维平台（CMDB、CI/CD、可观测性）的能力。深耕 <strong style="color:var(--accent2)">SRE 稳定性建设</strong>，擅长高并发架构下的全链路压测、容量规划。致力于通过 DevOps 和基础设施即代码（IaC）实现业务提效。
+      </p>
+      <div class="hero-tags">
+        <span class="tag">Kubernetes</span>
+        <span class="tag">Python</span>
+        <span class="tag">CI/CD</span>
+        <span class="tag">SRE</span>
+        <span class="tag">IaC</span>
+        <span class="tag">Observability</span>
+        <span class="tag">DevOps</span>
+        <span class="tag">Cloud Native</span>
+      </div>
+    </section>
+
+    <!-- Tech Stack -->
+    <section id="skills" class="section">
+      <div class="section-header">
+        <span class="section-title">技术栈</span>
+        <div class="section-line"></div>
+      </div>
+      <div class="stack-grid">
+        <div class="stack-item">
+          <div class="stack-category">语言/框架</div>
+          <div class="stack-techs">Python (Flask / FastAPI), Shell</div>
+        </div>
+        <div class="stack-item">
+          <div class="stack-category">容器/云原生</div>
+          <div class="stack-techs">Kubernetes, Docker, Helm</div>
+        </div>
+        <div class="stack-item">
+          <div class="stack-category">可观测性</div>
+          <div class="stack-techs">Prometheus, ELK Stack, Grafana</div>
+        </div>
+        <div class="stack-item">
+          <div class="stack-category">中间件/大数据</div>
+          <div class="stack-techs">MySQL, Redis, Kafka, Hadoop, Flink</div>
+        </div>
+        <div class="stack-item">
+          <div class="stack-category">基础设施</div>
+          <div class="stack-techs">Terraform, Ansible, Aliyun, HuaweiCloud</div>
+        </div>
+        <div class="stack-item">
+          <div class="stack-category">DevOps 工具</div>
+          <div class="stack-techs">Jenkins Pipeline, GitLab CI, Nexus, SonarQube</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Work Experience -->
+    <section id="experience" class="section">
+      <div class="section-header">
+        <span class="section-title">工作经历</span>
+        <div class="section-line"></div>
+      </div>
+
+      <div class="work-item">
+        <div class="work-dot"></div>
+        <div class="work-header">
+          <div class="work-company">上海骞行信息技术有限公司</div>
+          <div class="work-period">2025.08 — 至今</div>
+        </div>
+        <div class="work-role">高级运维工程师</div>
+        <ul class="work-list">
+          <li><div><strong>统一管理平台开发：</strong>负责内部产品统一管理平台的开发与维护，包括服务管理、告警 Dashboard、指标统一修改等模块。</div></li>
+          <li><div><strong>专项告警服务定制开发：</strong>根据业务需求，定制开发专项告警服务，提升告警准确率与响应效率。</div></li>
+          <li><div><strong>自动化脚本开发：</strong>在 180+ 服务器环境编写自动化处理脚本，提升运维效率。</div></li>
+        </ul>
+      </div>
+
+      <div class="work-item">
+        <div class="work-dot"></div>
+        <div class="work-header">
+          <div class="work-company">上海华测导航技术有限公司</div>
+          <div class="work-period">2024.12 — 2025.06</div>
+        </div>
+        <div class="work-role">运维开发工程师</div>
+        <ul class="work-list">
+          <li><div><strong>云原生工具链研发：</strong>使用华为云 ModelArts 资源生命周期管理平台，支持 AI 模型训练作业的自动化创建、监控与超期资源自动清理，提升研发效率 <strong>40%</strong>。</div></li>
+          <li><div><strong>CICD 深度定制：</strong>基于 Jenkins Shared Library 与 GitLab CI 构建标准化流水线，集成 SonarQube 代码审计与 AI 辅助扫描，实现应用发布的全自动化与合规性管控。</div></li>
+        </ul>
+      </div>
+
+      <div class="work-item">
+        <div class="work-dot"></div>
+        <div class="work-header">
+          <div class="work-company">广州嘉为科技有限公司（上海分公司）</div>
+          <div class="work-period">2022.10 — 2024.11</div>
+        </div>
+        <div class="work-role">高级运维工程师</div>
+        <ul class="work-list">
+          <li><div><strong>大客户 DevOps 交付：</strong>主导某大型银行 DevOps 转型，负责整体 DevOps 架构设计与交付落地，管理超过 <strong>200+ Pod</strong> 的稳定运行。</div></li>
+          <li><div><strong>蓝鲸智维深度实践：</strong>基于蓝鲸体系开发标准化运维场景，通过 Python/Django 封装业务巡检、自动扩缩容及故障自愈流程，MTTR 缩短 <strong>50%</strong>。</div></li>
+          <li><div><strong>自动化体系从无到有：</strong>利用 Ansible 实现了 <strong>300+</strong> 台服务器的统一配置管理，通过编写自定义模块解决了复杂业务环境下中间件一键部署的难题。</div></li>
+        </ul>
+      </div>
+
+      <div class="work-item">
+        <div class="work-dot"></div>
+        <div class="work-header">
+          <div class="work-company">成都锐菲网络科技有限公司（杭州分公司）</div>
+          <div class="work-period">2021.03 — 2022.10</div>
+        </div>
+        <div class="work-role">运维工程师</div>
+        <ul class="work-list">
+          <li><div><strong>环境优化：</strong>搭建公司内部测试环境并进行初始化环境优化，主要为研发团队交付多种测试环境和虚拟机的资源分配。</div></li>
+          <li><div><strong>平台建立：</strong>主导公司 CICD 自动化运维平台的搭建及后期维护，包括将开发环境迁移至测试 K8s 平台。</div></li>
+          <li><div><strong>人员协调：</strong>负责交付和运维团队人员整体协调，推进项目按期部署和按质交付。</div></li>
+        </ul>
+      </div>
+
+      <div class="work-item">
+        <div class="work-dot" style="background:var(--text-dim);box-shadow:none;"></div>
+        <div class="work-header">
+          <div class="work-company">塔塔信息技术（中国）有限责任公司杭州分公司</div>
+          <div class="work-period">2018.07 — 2021.03</div>
+        </div>
+        <div class="work-role">运维工程师</div>
+        <ul class="work-list">
+          <li><div><strong>故障处理：</strong>从监控工具接受服务器告警，快速响应解决故障保证系统服务稳定运行，通过 IRA 平台跟踪 case 处理流程。</div></li>
+          <li><div><strong>服务部署：</strong>搭建内部存储服务器集群并通过脚本实现业务服务器数据自动备份。</div></li>
+          <li><div><strong>效率提升：</strong>利用 Ansible 对服务器集群进行批量管理，大大提高 SLA。</div></li>
+          <li><div><strong>容器化迁移：</strong>配合开发对产品上线进行测试及部署，参与研发团队协作服务 Docker 容器化和数据迁移。</div></li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- Projects -->
+    <section id="projects" class="section">
+      <div class="section-header">
+        <span class="section-title">项目经历</span>
+        <div class="section-line"></div>
+      </div>
+
+      <div class="project-card">
+        <div class="project-header">
+          <div class="project-title">金融级 DevOps 运维开发平台构建</div>
+          <div class="project-role">主要运维负责人</div>
+        </div>
+        <div class="project-bg">针对国内金融业务的高可用与合规要求，在内网环境下构建支撑 1W+ QPS 的基础设施。</div>
+        <ul class="project-list">
+          <li><div><strong>平台架构设计与优化部署：</strong>主导设计基于 Kubernetes 的容器化 DevOps 平台，使用 NFS 作为制品库后端，设计含版本控制、生命周期、加密及跨区域复制的高效存储策略，确保高可用与成本效益。</div></li>
+          <li><div><strong>全生命周期 CI/CD 流水线：</strong>独立设计并实施标准化 CI/CD 流水线模板（Pipeline as Code: Jenkins Groovy / GitLab YAML），集成自建 GitLab、SonarQube、Docker，支持多语言及多环境自动化部署。利用 Python/Shell 开发超 <strong>50 个</strong>自定义工具以满足银行复杂的构建与合规需求。通过分布式构建、NFS 依赖缓存等手段，将核心业务线平均构建时间从 30 分钟以上缩短至 10 分钟以内（<strong>降幅超 65%</strong>）。成功建设并稳定运行超 <strong>300 条</strong> CI/CD 流水线，覆盖银行多个关键业务线。</div></li>
+          <li><div><strong>平台高可用保障与智能化运维：</strong>建立基于 ELK/EFK 的集中式日志平台和基于 Prometheus/Grafana 的企业级监控告警体系（集成 Node/Kubestate/DB/Jenkins 等 Exporters），全面覆盖 K8s、核心服务及 CI/CD 流水线。针对 MySQL 与 MongoDB 设计超 <strong>100 个</strong>精细化监控指标及多级告警规则。主动识别并解决多处关键性能瓶颈：优化 SQL 使相关 API 响应提速 <strong>3 倍</strong>，调整 MongoDB 索引使报表生成从小时级降至分钟级，将平均故障排查时间缩短约 <strong>40%</strong>。</div></li>
+        </ul>
+        <div class="tech-badges">
+          <span class="tech-badge">Kubernetes</span>
+          <span class="tech-badge">Python</span>
+          <span class="tech-badge">NFS</span>
+          <span class="tech-badge">Jenkins</span>
+          <span class="tech-badge">MongoDB</span>
+          <span class="tech-badge">Prometheus</span>
+          <span class="tech-badge">ELK Stack</span>
+          <span class="tech-badge">GitLab CI</span>
+        </div>
+      </div>
+
+      <div class="project-card">
+        <div class="project-header">
+          <div class="project-title">基于蓝鲸智维的标准化 Helm 工程化交付平台</div>
+          <div class="project-role">项目主导</div>
+        </div>
+        <div class="project-bg">为解决企业内部微服务部署繁琐、配置不统一的痛点，主导开发了一套基于 Helm 与蓝鲸 API 的制品库管理与自动化发布平台。</div>
+        <ul class="project-list">
+          <li><div><strong>Helm 模版工程化：</strong>设计了一套覆盖 Java/Node.js/Go 的通用 Helm Chart 模版，支持多环境 values 自动注入，支撑 <strong>19 个业务分区</strong>的一键式滚动更新。</div></li>
+          <li><div><strong>自动化基础设施与平台部署：</strong>初期利用 Ansible 与 Shell 实现平台一键部署。后续主导引入 Terraform 对承载 K8s 集群的核心基础设施（虚拟机、网络、存储等）进行代码化编排与管理，确保一致性与可追溯性，形成 IaC 分层策略。</div></li>
+          <li><div><strong>标准化运维与流程自动化：</strong>深度利用蓝鲸标准运维将制品库平台的部署、更新、巡检及故障自愈等关键运维操作流程化、脚本化。在 K8s 环境中设计标准化运维流程，通过自定义脚本结合 kubectl API 实现精细化监控与自动化响应。</div></li>
+          <li><div><strong>核心平台容器化改造：</strong>主导制品库平台从虚机到 K8s 的架构改造，从零设计并编写了覆盖所有组件的 Helm Charts，通过复杂的模板化与依赖管理，实现了平台在 K8s 上的一键式部署、升级、配置与回滚。</div></li>
+        </ul>
+        <div class="tech-badges">
+          <span class="tech-badge">Helm</span>
+          <span class="tech-badge">Kubernetes</span>
+          <span class="tech-badge">Python</span>
+          <span class="tech-badge">Ansible</span>
+          <span class="tech-badge">Terraform</span>
+          <span class="tech-badge">蓝鲸智维</span>
+          <span class="tech-badge">SaaS</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- Education -->
+    <section id="education" class="section">
+      <div class="section-header">
+        <span class="section-title">教育背景</span>
+        <div class="section-line"></div>
+      </div>
+      <div class="edu-card">
+        <div>
+          <div class="edu-school">天津城建大学</div>
+          <div class="edu-degree">物联网工程 · 本科</div>
+          <div class="edu-courses">
+            主修课程：<span>操作系统、计算机网络、数据结构与算法、数据库原理、C/C++ 程序设计</span>
+          </div>
+        </div>
+        <div class="edu-period">2014.09 — 2018.07</div>
+      </div>
+    </section>
+
+  </main>
 </div>
-</section>
 
-<section class="section">
-<h2>核心技术栈</h2>
-<div class="card tech-stack">
-<span class="tag">Kubernetes</span>
-<span class="tag">Docker</span>
-<span class="tag">Helm</span>
-<span class="tag">Python (Flask/FastAPI)</span>
-<span class="tag">Prometheus</span>
-<span class="tag">ELK</span>
-<span class="tag">Grafana</span>
-<span class="tag">MySQL</span>
-<span class="tag">Redis</span>
-<span class="tag">Kafka</span>
-<span class="tag">Terraform</span>
-<span class="tag">Ansible</span>
-<span class="tag">Jenkins Pipeline</span>
-<span class="tag">GitLab CI</span>
-</div>
-</section>
+<script>
+  // Active nav on scroll
+  const sections = document.querySelectorAll('section[id]');
+  const navLinks = document.querySelectorAll('.nav-link');
 
-<section class="section">
-<h2>代表项目</h2>
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        navLinks.forEach(l => l.classList.remove('active'));
+        const active = document.querySelector(`.nav-link[href="#${entry.target.id}"]`);
+        if (active) active.classList.add('active');
+      }
+    });
+  }, { threshold: 0.3 });
 
-<div class="card">
-<div class="job-title">金融级 DevOps 运维开发平台构建（主要负责人）</div>
-<div class="job-meta">支撑 1W+ QPS ｜ 300+ CI/CD 流水线</div>
-<ul>
-<li>设计 Kubernetes 容器化 DevOps 平台与高可用存储架构</li>
-<li>构建标准化 Pipeline as Code 流水线体系</li>
-<li>构建 ELK + Prometheus 企业级监控体系</li>
-<li>优化构建效率，核心业务构建时间缩短 65%</li>
-<li>MySQL / MongoDB 性能调优，接口响应提升 3 倍</li>
-</ul>
-</div>
-
-<div class="card">
-<div class="job-title">基于 Helm 的标准化工程交付平台（项目主导）</div>
-<div class="job-meta">19个业务分区 ｜ IaC 分层策略</div>
-<ul>
-<li>设计通用 Helm Chart 模板体系</li>
-<li>Terraform + Ansible 分层 IaC 架构</li>
-<li>平台虚机到 K8s 容器化改造</li>
-<li>实现一键部署、回滚与高可用扩缩容</li>
-</ul>
-</div>
-
-</section>
-
-<section class="section">
-<h2>工作经历</h2>
-
-<div class="card">
-<div class="job-title">上海骞行信息技术有限公司 ｜ 高级运维工程师</div>
-<div class="job-meta">2025.08 - 至今</div>
-<ul>
-<li>统一管理平台开发与专项告警系统定制</li>
-<li>180+ 服务器自动化脚本体系建设</li>
-</ul>
-</div>
-
-<div class="card">
-<div class="job-title">广州嘉为科技有限公司（上海分公司） ｜ 高级运维工程师</div>
-<div class="job-meta">2022.10 - 2024.11</div>
-<ul>
-<li>大型银行 DevOps 转型交付</li>
-<li>管理 200+ Pod 稳定运行</li>
-<li>自动化体系从 0 到 1 建设</li>
-</ul>
-</div>
-
-</section>
-
-<section class="section">
-<h2>教育背景</h2>
-<div class="card">
-天津城建大学 ｜ 物联网工程（本科）<br>
-2014.09 - 2018.07
-</div>
-</section>
-
-<footer>
-© 2026 Zhang Jiang · DevOps / SRE Engineer
-</footer>
-
-</div>
+  sections.forEach(s => observer.observe(s));
+</script>
 </body>
 </html>
